@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "report": "npx playwright show-report",
+    "report": "npx playwright show-report tests/reports",
     "test": "npx playwright test",
     "test:debug": "npx playwright test --ui"
   },
