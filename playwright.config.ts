@@ -13,8 +13,8 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   outputDir: 'tests/outputs/',
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: [['html', { outputFolder: 'tests/outputs/reports/' }]],
+  workers: process.env.CI ? 4 : undefined,
+  reporter: [['html', { outputFolder: 'tests/reports/' }]],
   snapshotDir: 'tests/expected_screenshots',
   snapshotPathTemplate: '{snapshotDir}/{testFilePath}/{testName}{ext}',
   expect: {
