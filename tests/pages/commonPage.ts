@@ -2,6 +2,7 @@ import { expect, type Locator, type Page } from '@playwright/test';
 
 export class CommonPage {
     readonly page: Page;
+    readonly analyticsDashboardMenu: Locator;
     readonly currentPageDashboard: Locator;
     readonly sideDashboardMenu: Locator;
     readonly sideChatMenu: Locator;
@@ -25,12 +26,22 @@ export class CommonPage {
     readonly sidePagesMenu: Locator;
     readonly sideAuthenticationMenu: Locator;
     readonly sideDocumentationMenu: Locator;
+    readonly salesDashboardMenu: Locator;
+    readonly financeDashboardMenu: Locator;
+    readonly cryptoDashboardMenu: Locator;
+    readonly burguerSideMenuMobile: Locator;
 
     constructor(page: Page) {
         this.page = page;
-        this.currentPageDashboard = page.locator(`before:content-['/']`).filter({ has: page.locator('span') })
+        this.currentPageDashboard = page.locator('.space-x-2').locator(page.locator('span'))
+        //Mobile
+        this.burguerSideMenuMobile = page.locator('.horizontal-logo > .collapse-icon');
         //Dashboard
         this.sideDashboardMenu = page.getByRole('button', { name: 'Dashboard' })
+        this.salesDashboardMenu = page.getByRole('link', { name: 'Sales' });
+        this.analyticsDashboardMenu = page.getByRole('link', { name: 'Analytics' });
+        this.financeDashboardMenu = page.getByRole('link', { name: 'Finance' });
+        this.cryptoDashboardMenu = page.getByRole('link', { name: 'Crypto' });
         // Apps
         this.sideChatMenu = page.getByRole('link', { name: 'Chat' })
         this.sideMailboxMenu = page.getByRole('link', { name: 'Mailbox' })
@@ -61,6 +72,25 @@ export class CommonPage {
 
     async openDashboardMenu() {
         await this.sideDashboardMenu.click()
+    }
+    async openSideMenuMobile() {
+        await this.burguerSideMenuMobile.click()
+    }
+    async clickSalesOfDashboard(){
+        await this.openDashboardMenu();
+        await this.salesDashboardMenu.click()
+    }
+    async clickAnalyticsOfDashboard(){
+        await this.openDashboardMenu();
+        await this.analyticsDashboardMenu.click()
+    }
+    async clickFinanceOfDashboard(){
+        await this.openDashboardMenu();
+        await this.financeDashboardMenu.click()
+    }
+    async clickCryptoOfDashboard(){
+        await this.openDashboardMenu();
+        await this.cryptoDashboardMenu.click()
     }
     async openInvoiceMenu() {
         await this.sideInvoiceMenu.click()
