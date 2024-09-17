@@ -16,6 +16,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: [['html', { outputFolder: 'tests/outputs/reports/' }]],
   snapshotDir: 'tests/expected_screenshots',
+  snapshotPathTemplate: '{snapshotDir}/{testFilePath}/{testName}{ext}',
   expect: {
     toHaveScreenshot: { maxDiffPixels: 0, animations: "disabled" },
   },
