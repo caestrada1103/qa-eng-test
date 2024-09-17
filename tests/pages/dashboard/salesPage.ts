@@ -45,7 +45,6 @@ export class SalesPage {
     }
 
     async elementsOnRevenueCard() {
-        this.revenueCard.scrollIntoViewIfNeeded();
         await expect(this.revenueCard.getByRole('heading', { name: 'Revenue' })).toHaveCount(1);
         await expect(this.revenueCard.getByText('Total Profit $')).toHaveCount(1);
         await expect(
@@ -58,21 +57,18 @@ export class SalesPage {
         await expect(this.revenueCard.locator('.rounded-lg > div').first()).toHaveCount(1);
     }
     async elementsOnSalesByCategoryCard() {
-        this.salesByCategoryCard.scrollIntoViewIfNeeded();
         await expect(this.salesByCategoryCard.getByRole('heading', { name: 'Sales By Category' })).toHaveCount(1);
         await expect(this.salesByCategoryCard.getByText('Apparel')).toHaveCount(1);
         await expect(this.salesByCategoryCard.getByText('Sports')).toHaveCount(1);
         await expect(this.salesByCategoryCard.getByText('Others', { exact: true })).toHaveCount(1);
     }
     async elementsOnDailySalesCard() {
-        this.dailySalesCard.scrollIntoViewIfNeeded();
         await expect(this.dailySalesCard.locator('.grid > svg').first()).toHaveCount(1);
         await expect(this.dailySalesCard.getByRole('heading', { name: 'Daily Sales Go to columns for' })).toHaveCount(1);
         await expect(this.dailySalesCard.getByText('Go to columns for details.')).toHaveCount(1);
-        await expect(this.dailySalesCard.locator('div:nth-child(2) > div > div:nth-child(2) > .rounded-lg > div')).toHaveCount(1);
+        await expect(this.dailySalesCard.locator('.rounded-lg').first()).toHaveCount(1);
     }
     async elementsOnSummaryCard() {
-        this.summaryCard.scrollIntoViewIfNeeded();
         await expect(this.summaryCard.getByRole('heading', { name: 'Summary' })).toHaveCount(1);
         await expect(
             this.summaryCard
@@ -80,37 +76,20 @@ export class SalesPage {
                 .filter({ hasText: /^Summary$/ })
                 .getByRole('button')
         ).toHaveCount(1);
-        await expect(
-            this.summaryCard
-                .locator('div')
-                .filter({ has: this.summaryCard.getByRole('heading', { name: 'Income' }) })
-                .first()
-        ).toHaveCount(1);
-        await expect(
-            this.summaryCard
-                .locator('div')
-                .filter({ has: this.summaryCard.getByRole('heading', { name: 'Profit' }) })
-                .first()
-        ).toHaveCount(1);
-        await expect(
-            this.summaryCard
-                .locator('div')
-                .filter({ has: this.summaryCard.getByRole('heading', { name: 'Profit' }) })
-                .first()
-        ).toHaveCount(1);
-        await expect(this.summaryCard.locator('.space-y-9').locator('items-center')).toHaveCount(3);
+        await expect(this.summaryCard.getByText('Income$')).toHaveCount(1);
+        await expect(this.summaryCard.getByText('Profit$')).toHaveCount(1);
+        await expect(this.summaryCard.getByText('Expenses$')).toHaveCount(1);
+        await expect(this.summaryCard.locator('.space-y-9').locator('.items-center')).toHaveCount(3);
     }
     async elementsOnRecentActivitiesCard() {
-        this.recentActivitiesCard.scrollIntoViewIfNeeded();
         await expect(this.recentActivitiesCard.getByRole('heading', { name: 'Recent Activities' })).toHaveCount(1);
         await expect(this.recentActivitiesCard.locator('.badge').first()).toHaveCount(1);
         await expect(this.recentActivitiesCard.getByText('Send Mail to HR and Admin').first()).toHaveCount(1);
         await expect(this.recentActivitiesCard.getByRole('button', { name: 'View All' })).toHaveCount(1);
         await expect(this.recentActivitiesCard.getByText('Rebooted Server').nth(1)).toHaveCount(1);
-        await expect(this.recentActivitiesCard.locator('.cursor-pointer').locator('.group')).toHaveCount(1);
+        await expect(this.recentActivitiesCard.locator('.cursor-pointer').locator('.group')).toHaveCount(14);
     }
     async elementsOnTransactionCard() {
-        this.transactionCard.scrollIntoViewIfNeeded();
         await expect(this.transactionCard.getByRole('heading', { name: 'Transactions' })).toHaveCount(1);
         await expect(
             this.transactionCard
@@ -121,10 +100,9 @@ export class SalesPage {
         await expect(this.transactionCard.getByText('SP', { exact: true })).toHaveCount(1);
         await expect(this.transactionCard.getByText('DA', { exact: true })).toHaveCount(1);
         await expect(this.transactionCard.getByText('Daisy Anderson')).toHaveCount(1);
-        await expect(this.transactionCard.locator('.space-y-6').locator('div')).toHaveCount(6);
+        await expect(this.transactionCard.locator('.space-y-6').locator('.flex')).toHaveCount(6);
     }
     async elementsOnWalletBalanceCard() {
-        this.walletBalanceCard.scrollIntoViewIfNeeded();
         await expect(this.walletBalanceCard.getByText('Wallet Balance')).toHaveCount(1);
         await expect(this.walletBalanceCard.getByRole('heading', { name: '$' })).toHaveCount(1);
         await expect(this.walletBalanceCard.getByText('Received$')).toHaveCount(1);
@@ -134,8 +112,7 @@ export class SalesPage {
         await expect(this.walletBalanceCard.locator('div.mb-6')).toHaveCount(1);
         await expect(this.walletBalanceCard.locator('div.mb-6').getByRole('button')).toHaveCount(1);
     }
-    async elementsOnWecentOrdersCard() {
-        this.recentOrdersCard.scrollIntoViewIfNeeded();
+    async elementsOnRecentOrdersCard() {
         await expect(this.recentOrdersCard.locator('div').filter({ hasText: /^Recent Orders$/ })).toHaveCount(1);
         await expect(this.recentOrdersCard.getByRole('cell', { name: 'Customer' })).toHaveCount(1);
         await expect(this.recentOrdersCard.getByRole('cell', { name: 'Product' }).first()).toHaveCount(1);
@@ -145,15 +122,14 @@ export class SalesPage {
         await expect(this.recentOrdersCard.locator('.table-responsive').locator('tr')).toHaveCount(6);
     }
     async elementsOnTopSellingProductCard() {
-        this.topSellingProductCard.scrollIntoViewIfNeeded();
         await expect(this.topSellingProductCard.getByRole('heading', { name: 'Top Selling Product' })).toHaveCount(1);
-        await expect(this.topSellingProductCard.getByRole('cell', { name: 'Product' }).nth(1)).toHaveCount(1);
-        await expect(this.topSellingProductCard.getByRole('cell', { name: 'Price' }).nth(1)).toHaveCount(1);
+        await expect(this.topSellingProductCard.getByRole('cell', { name: 'Product' })).toHaveCount(1);
+        await expect(this.topSellingProductCard.getByRole('cell', { name: 'Price' })).toHaveCount(1);
         await expect(this.topSellingProductCard.getByRole('cell', { name: 'Discount' })).toHaveCount(1);
         await expect(this.topSellingProductCard.getByRole('cell', { name: 'Sold' })).toHaveCount(1);
         await expect(this.topSellingProductCard.getByRole('cell', { name: 'Source' })).toHaveCount(1);
-        await expect(this.topSellingProductCard.locator('table-responsive')).toHaveCount(1);
-        await expect(this.topSellingProductCard.locator('.table-responsive').locator('group')).toHaveCount(5);
+        await expect(this.topSellingProductCard.locator('.table-responsive')).toHaveCount(1);
+        await expect(this.topSellingProductCard.locator('.table-responsive').locator('.group')).toHaveCount(5);
     }
 
     async validatePixelsRevenueCard() {
