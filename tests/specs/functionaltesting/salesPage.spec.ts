@@ -12,7 +12,6 @@ function waitForAnimationEnd(locator: Locator) {
 }
 
 async function waitPageToBeLoad(page: Page) {
-    await page.goto('/');
     await expect(page.locator('.screen_loader')).toBeHidden();
     await waitForAnimationEnd(page.locator('.apexcharts-donut-slice-2').first());
     await waitForAnimationEnd(page.locator('.animate__animated'));
@@ -20,52 +19,51 @@ async function waitPageToBeLoad(page: Page) {
     await page.waitForTimeout(1400);
 }
 
+test.describe.configure({ mode: 'parallel' });
 test.beforeAll(async ({ browser }) => {
     const context = await browser.newContext();
     page = await context.newPage();
-    await waitPageToBeLoad(page);
+    await page.goto('/');
     commonPage = new CommonPage(page);
     salesPage = new SalesPage(page);
+    await waitPageToBeLoad(page);
 });
 
-test.describe('HomePage', () => {
-    test('main navigation', async () => {
+test.describe('Home Page/Sales Dashboard', () => {
+    test('Url validation', async () => {
         await expect(page).toHaveURL('http://127.0.0.1:3000');
     });
-
-    test('has title', async () => {
-        await expect(page.getByText('DashboardSales', { exact: true })).toBeVisible();
+    test('Has title', async () => {
+        await expect(commonPage.currentPageDashboard).toHaveText('Sales');
     });
-
-    test('All expected card elements exist', async () => {
+    test('Has expected card elements', async () => {
         await salesPage.elementsExistOnDashboard();
     });
-
-    test('Elements on revenue card', async () => {
+    test('Revenue card has all elements', async () => {
         await salesPage.elementsOnRevenueCard();
     });
-    test('Elements on sales by category card', async () => {
+    test('Category card has all elements', async () => {
         await salesPage.elementsOnSalesByCategoryCard();
     });
-    test('Elements on daily sales card', async () => {
+    test('Daily sales card has all elements', async () => {
         await salesPage.elementsOnDailySalesCard();
     });
-    test('Elements on summary card', async () => {
+    test('Summary card has all elements', async () => {
         await salesPage.elementsOnSummaryCard();
     });
-    test('Elements on recent activities card', async () => {
+    test('Recent activities card has all elements', async () => {
         await salesPage.elementsOnRecentActivitiesCard();
     });
-    test('Elements on transaction card', async () => {
+    test('Transaction card has all elements', async () => {
         await salesPage.elementsOnTransactionCard();
     });
-    test('Elements on wallet balance card', async () => {
+    test('Wallet balance card has all elements', async () => {
         await salesPage.elementsOnWalletBalanceCard();
     });
-    test('Elements on recent orders card', async () => {
-        await salesPage.elementsOnWecentOrdersCard();
+    test('Recent orders card has all elements', async () => {
+        await salesPage.elementsOnRecentOrdersCard();
     });
-    test('Elements on top selling product card', async () => {
+    test('Top selling product card has all elements', async () => {
         await salesPage.elementsOnTopSellingProductCard();
     });
 });
